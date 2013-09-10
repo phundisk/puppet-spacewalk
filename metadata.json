@@ -1,0 +1,32 @@
+{
+  "project_page": "https://github.com/phundisk/puppet-spacewalk",
+  "summary": "Puppet module for Spacewalk / Satellite Server and Client",
+  "checksums": {
+    "README.md": "17ff2814aa7d85aef3a0fc7544ca4642",
+    "manifests/repo_client.pp": "3500c57c25726a3dce95a4444b58cb8d",
+    "files/jpackage-generic.repo": "c2c40a8a7c2a2157f11b6f14fdfb448f",
+    "manifests/init.pp": "294db26d8e61d43959cc244ebe172be2",
+    "Modulefile": "55f152a75bdcb3b358cf28cd37c65b62",
+    "manifests/client.pp": "a08824fab04961726ff2b49677b98932",
+    "manifests/absent.pp": "efe6ff425552a8680fa6d6fa8a518621",
+    "files/zz-spacewalk-server-wsgi.conf": "2d37550aa75583a5981a6f9a7b3ef316",
+    "manifests/oracle.pp": "180c3c6b79605acb48e35fc0e91bc7bb",
+    "files/zz-spacewalk-www.conf": "f78b7c9268da34325b8f5ff594733e66",
+    "manifests/postgresql.pp": "1b5e7b8f7e266965d09cbdf482e20760",
+    "templates/spacewalk.answer.erb": "05e9f57073e58778bf4982f3b196de03",
+    "files/zz-spacewalk-server.conf": "a5152d6cfec9556c05332f9bb5b9d792",
+    "manifests/repo_server.pp": "f1e33406c6ba9aee197bd040246be7c9"
+  },
+  "author": "Alex Farhadi (Phundisk)",
+  "source": "git://github.com/phundisk/puppet-spacewalk.git",
+  "license": "",
+  "dependencies": [
+
+  ],
+  "version": "0.1.2",
+  "types": [
+
+  ],
+  "name": "phundisk-spacewalk",
+  "description": "Module that will setup spacewalk server and clients."
+}

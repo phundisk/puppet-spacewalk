@@ -1,0 +1,28 @@
+admin-email=<%= admin_email %>
+ssl-set-org=<%= ca_organization %>
+ssl-set-org-unit=<%= ca_organization_unit %>
+ssl-set-city=<%= ca_city %>
+ssl-set-state=<%= ca_state %>
+ssl-set-country=<%= ca_country_code %>
+ssl-password=<%= ca_cert_password %>
+ssl-set-email=<%= ca_email_address %>
+<% if @configure_apache_ssl == true then -%>
+ssl-config-sslvhost=Y
+<% elsif @configure_apache_ssl == false then -%>
+ssl-config-sslvhost=N
+<% end -%>
+db-backend=<%= db_type %>
+db-name=<%= postgresql_db_name %>
+db-user=<%= db_user %>
+db-password=<%= db_password %>
+db-host=<%= db_host %>
+<% if @db_type == 'postgresql' then -%>
+db-port=<%= postgresql_port %>
+<% elsif @db_type == 'oracle' then -%>
+db-port=<%= oracle_port %>
+<% end -%>
+<% if @enable_cobbler == true then -%>
+enable-tftp=Y
+<% elsif @enable_cobbler == false then -%>
+enable-tftp=N
+<% end -%>
