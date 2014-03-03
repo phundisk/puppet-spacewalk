@@ -6,22 +6,28 @@
 #
 # === Parameters
 #
+# [*activation_key*]
+#   Activation key need for the registration
+#   Default: unset
+#
+# [*spacewalk_fqdn*]
+#   FQDN of the spacewalk server.
+#   Default: spacewalk.${::domain}
+#
+# [*force_registration*]
+#
+#   If the client should forcefully register itself on the spacewalk
+#   server.
+#   WARNING: if set to yes the client currently re-registers
+#   itself to the server on every puppet run. This could result in the
+#   same spacewalk client registered multiple times on the server.
+#   Default: false
+#
 # [*use_spacewalk_client_repo*]
 #   If we should also enable the spacewalk
 #   client repositories.  This is not required for a client that
 #   registers on a satellite server.
-#
 #   Default: true
-#
-# [*spacewalk_fqdn*]
-#   FQDN of the spacewalk server.
-#
-#   Default: spacewalk.${::domain}
-#
-# [*activation_key*]
-#   Activation key need for the registration
-#
-#   Default: unset
 #
 # === Examples
 #
