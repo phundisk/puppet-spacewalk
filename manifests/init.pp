@@ -17,8 +17,10 @@ class spacewalk (
   $ca_state             = 'MA',
   $ca_country_code      = 'US',
   $enable_cobbler       = true, # TFTP Support
+  $disconnected_setup   = true,
+  $setup_timeout        = 1800,
 ){
-  
+
   # ABOUT: This class will setup the spacewalk server.
   # QA: Tested on CentOS 5.4 with Epel repo
   #     Tested on CentOS 6.3 (need some packages from the DAG repository python-netaddr, python-pygments, mod_wsgi, etc)
@@ -35,36 +37,41 @@ class spacewalk (
   # * Ensure nothing in listening on any needed ports.  (i.e. 8080, 8009, etc)
   # * rm /tmp/spacewalk.answer file and re-run puppet
   # * /usr/bin/spacewalk-setup-postgresql remove --db spaceschema --user spaceuser
-  # 
+  #
   # TODO:
   # * Support for Oracle DB in Module
   # * Test on other systems (CentOS 6.X, Fedora, etc)
   # * Enable support with external apache / tomcat puppet modules
-    
+
   include spacewalk::repo_server
-  
+
   # deteremin which db type is defined, oracle/postgresql
   if $spacewalk::db_type == 'postgresql' {
     # Postgresql related stuff
-    include spacewalk::postgresql
+    class { 'spacewalk::postgresql' :}
   }
   elsif $spacewalk::db_type == 'oracle' {
     # NOT YET IMPLEMENTED
-    include spacewalk::oracle
+    class { 'spacewalk::oracle' :}
   }
   else {
     fail("The db_type of ${spacewalk::db_type} is not valid or not supported.")
   }
-  
+
+  if($enable_cobbler == false) {
+    warning("Cobbler is disabled. Spacewalk WebUI might not work properly.")
+  }
+
   # Create an answer file from the param class.  This will be overwritten by the exec (kinda hacky)
   file {'/tmp/spacewalk.answer':
-    ensure => present,
-    owner => 'root',
-    group => 'root',
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
     replace => false,
-    content => template('spacewalk/spacewalk.answer.erb')
+    content => template('spacewalk/spacewalk.answer.erb'),
+    before  => Exec['setupSpacewalk'],
   }
-  
+
   # apache config files.  static files for right now
   file {'/etc/httpd/conf.d/zz-spacewalk-www.conf':
     ensure => present,
@@ -83,7 +90,7 @@ class spacewalk (
     source => 'puppet:///modules/spacewalk/zz-spacewalk-server.conf',
     require => Exec['setupSpacewalk'],
   }
-  
+
   file {'/etc/httpd/conf.d/zz-spacewalk-server-wsgi.conf':
     ensure => present,
     owner => 'root',
@@ -92,6 +99,6 @@ class spacewalk (
     source => 'puppet:///modules/spacewalk/zz-spacewalk-server-wsgi.conf',
     require => Exec['setupSpacewalk'],
   }
-  
-  
+
+
 }
